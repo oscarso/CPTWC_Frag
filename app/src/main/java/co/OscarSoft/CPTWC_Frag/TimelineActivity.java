@@ -27,7 +27,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     private static final int ACTIVITY_REQ_CODE = 1234;
     private TweetsListFrag fragTweetsList;
-    private TwitterClient client;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,9 +35,6 @@ public class TimelineActivity extends AppCompatActivity {
         setContentView(R.layout.activity_timeline);
         //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         //setSupportActionBar(toolbar);
-        client = TwitterApplication.getRestClient();
-        populateTimeline();
-
         if (savedInstanceState == null) {
             fragTweetsList = (TweetsListFrag) getSupportFragmentManager().findFragmentById(R.id.frag_timeline);
         }
@@ -86,6 +83,7 @@ public class TimelineActivity extends AppCompatActivity {
 
     private void postNewTweet(final Tweet newTweet) {
         //Log.d("DEBUG", "newTweet: " + newTweet.toString());
+        /*
         client.postStatus(
                 new JsonHttpResponseHandler() {
                     @Override
@@ -97,53 +95,12 @@ public class TimelineActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        //super.onFailure(statusCode, headers, responseString, throwable);
-                        Log.d("ERROR", "postNewTweet Fail 1");
-                    }
-
-                    @Override
                     public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                         //super.onFailure(statusCode, headers, throwable, errorResponse);
                         Log.d("ERROR", "postNewTweet Fail 2");
                     }
-
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                        //super.onFailure(statusCode, headers, throwable, errorResponse);
-                        Log.d("ERROR", "postNewTweet Fail 3");
-                    }
                 },
                 newTweet
-        );
-    }
-
-    private void populateTimeline() {
-        client.getHomeTimeline(new JsonHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                ArrayList<Tweet> arrTweet = new ArrayList<Tweet>();
-                fragTweetsList.addAll(Tweet.fromJSONArray(response));
-                //Log.d("DEBUG", arrAdapterTweet.toString());
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                //super.onFailure(statusCode, headers, responseString, throwable);
-                Log.d("ERROR", "populateTimeline Fail 1");
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
-                //super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.d("ERROR", "populateTimeline Fail 2");
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONArray errorResponse) {
-                //super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.d("ERROR", "populateTimeline Fail 3");
-            }
-        });
+        );*/
     }
 }
