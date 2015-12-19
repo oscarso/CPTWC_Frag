@@ -11,7 +11,7 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:name="co.OscarSoft.CPTWC_Frag.frags.HomeTimelineFrag"
+        android:name="co.OscarSoft.CPTWC_Frag.frags.MentionsTimelineFrag"
         android:id="@+id/frag_timeline"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
