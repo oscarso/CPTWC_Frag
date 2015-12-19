@@ -18,32 +18,29 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import co.OscarSoft.CPTWC_Frag.frags.TweetsListFrag;
 import co.OscarSoft.CPTWC_Frag.models.Tweet;
 import co.OscarSoft.CPTWC_Frag.models.User;
+
 
 public class TimelineActivity extends AppCompatActivity {
 
     private static final int ACTIVITY_REQ_CODE = 1234;
+    private TweetsListFrag fragTweetsList;
     private TwitterClient client;
-    private ArrayList<Tweet> arrListTweet;
-    private TweetsArrayAdapter arrAdapterTweet;
-    private ListView lvTweets;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
-        lvTweets = (ListView) findViewById(R.id.lvTweets);
-        arrListTweet = new ArrayList<>();
-        arrAdapterTweet = new TweetsArrayAdapter(this, arrListTweet);
-        lvTweets.setAdapter(arrAdapterTweet);
-
+        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        //setSupportActionBar(toolbar);
         client = TwitterApplication.getRestClient();
         populateTimeline();
+
+        if (savedInstanceState == null) {
+            fragTweetsList = (TweetsListFrag) getSupportFragmentManager().findFragmentById(R.id.frag_timeline);
+        }
     }
 
     @Override
@@ -95,8 +92,8 @@ public class TimelineActivity extends AppCompatActivity {
                     public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                         //super.onSuccess(statusCode, headers, response);
                         Log.d("INFO", "postNewTweet: " + response.toString());
-                        arrAdapterTweet.add(newTweet);
-                        arrAdapterTweet.setNotifyOnChange(true);
+                        //arrAdapterTweet.add(newTweet);
+                        //arrAdapterTweet.setNotifyOnChange(true);
                     }
 
                     @Override
@@ -125,10 +122,8 @@ public class TimelineActivity extends AppCompatActivity {
         client.getHomeTimeline(new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {
-                //super.onSuccess(statusCode, headers, response);
-                //Log.d("INFO", response.toString());
                 ArrayList<Tweet> arrTweet = new ArrayList<Tweet>();
-                arrAdapterTweet.addAll(Tweet.fromJSONArray(response));
+                fragTweetsList.addAll(Tweet.fromJSONArray(response));
                 //Log.d("DEBUG", arrAdapterTweet.toString());
             }
 
