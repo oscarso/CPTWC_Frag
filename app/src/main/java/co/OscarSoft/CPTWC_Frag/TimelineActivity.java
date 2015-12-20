@@ -1,8 +1,14 @@
 package co.OscarSoft.CPTWC_Frag;
 
 import android.app.Activity;
+//import android.app.FragmentManager;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -10,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 
+import com.astuetz.PagerSlidingTabStrip;
 import com.loopj.android.http.JsonHttpResponseHandler;
 
 import org.apache.http.Header;
@@ -18,6 +25,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import co.OscarSoft.CPTWC_Frag.frags.HomeTimelineFrag;
+import co.OscarSoft.CPTWC_Frag.frags.MentionsTimelineFrag;
 import co.OscarSoft.CPTWC_Frag.frags.TweetsListFrag;
 import co.OscarSoft.CPTWC_Frag.models.Tweet;
 import co.OscarSoft.CPTWC_Frag.models.User;
@@ -26,18 +35,17 @@ import co.OscarSoft.CPTWC_Frag.models.User;
 public class TimelineActivity extends AppCompatActivity {
 
     private static final int ACTIVITY_REQ_CODE = 1234;
-    private TweetsListFrag fragTweetsList;
-
+    //private TweetsListFrag fragTweetsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_timeline);
-        //Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        //setSupportActionBar(toolbar);
-        if (savedInstanceState == null) {
-            fragTweetsList = (TweetsListFrag) getSupportFragmentManager().findFragmentById(R.id.frag_timeline);
-        }
+
+        ViewPager vpPager = (ViewPager) findViewById(R.id.viewpager);
+        vpPager.setAdapter(new TweetsPagerAdapter(getSupportFragmentManager()));
+        PagerSlidingTabStrip tabStrip = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabStrip.setViewPager(vpPager);
     }
 
     @Override
@@ -45,6 +53,15 @@ public class TimelineActivity extends AppCompatActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.action_menu, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        /*if (id == R.id.) {
+            return true;
+        }*/
+        return super.onOptionsItemSelected(item);
     }
 
     public void onComposeAction(MenuItem mi) {
@@ -102,5 +119,34 @@ public class TimelineActivity extends AppCompatActivity {
                 },
                 newTweet
         );*/
+    }
+
+    public class TweetsPagerAdapter extends FragmentPagerAdapter {
+        final int PAGE_COUNT = 2;
+        private String tabTitles[] = {"Home", "Mentions"};
+
+        public TweetsPagerAdapter(FragmentManager fm) {
+            super(fm);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            if (position == 0) {
+                return new HomeTimelineFrag();
+            } else if (position == 1) {
+                return new MentionsTimelineFrag();
+            }
+            return null;
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return tabTitles[position];
+        }
+
+        @Override
+        public int getCount() {
+            return tabTitles.length;
+        }
     }
 }
