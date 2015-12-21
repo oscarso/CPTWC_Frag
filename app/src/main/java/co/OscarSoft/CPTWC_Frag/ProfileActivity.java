@@ -7,21 +7,28 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 //import android.support.v7.widget.Toolbar;
+import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-//import android.view.View;
 
 import co.OscarSoft.CPTWC_Frag.frags.UserTimelineFrag;
 
 
 public class ProfileActivity extends AppCompatActivity {
 
+    public final static String SCREEN_NAME = "screen_name";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
-        final String screenName = getIntent().getStringExtra("screen_name");
+        Toolbar myToolbar = (Toolbar) findViewById(R.id.toolbar_profile);
+        setSupportActionBar(myToolbar);
+
+        final String screenName = getIntent().getStringExtra(SCREEN_NAME);
+        Log.d("DEBUG", "ProfileActivity: screenName=" + screenName);
         if (savedInstanceState == null) {
             UserTimelineFrag userTimelineFrag = UserTimelineFrag.newInstance(screenName);
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -32,7 +39,7 @@ public class ProfileActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_timeline, menu);
+        getMenuInflater().inflate(R.menu.menu_profile, menu);
         return true;
     }
 

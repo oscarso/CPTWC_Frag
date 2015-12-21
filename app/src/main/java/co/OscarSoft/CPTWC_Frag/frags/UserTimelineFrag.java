@@ -9,6 +9,7 @@ import org.apache.http.Header;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import co.OscarSoft.CPTWC_Frag.ProfileActivity;
 import co.OscarSoft.CPTWC_Frag.TwitterApplication;
 import co.OscarSoft.CPTWC_Frag.TwitterClient;
 import co.OscarSoft.CPTWC_Frag.models.Tweet;
@@ -25,16 +26,18 @@ public class UserTimelineFrag extends TweetsListFrag {
         populateTimeline();
     }
 
-    public static UserTimelineFrag newInstance(String screenName) {
+    public static UserTimelineFrag newInstance(final String screenName) {
         UserTimelineFrag userTimelineFrag = new UserTimelineFrag();
         Bundle args = new Bundle();
-        args.putString("screen_name", screenName);
+        Log.d("DEBUG", "UserTimelineFrag: newInstance - screenName=" + screenName);
+        args.putString(ProfileActivity.SCREEN_NAME, screenName);
         userTimelineFrag.setArguments(args);
         return userTimelineFrag;
     }
 
     private void populateTimeline() {
-        final String screenName = getArguments().getString("screen_name");
+        final String screenName = getArguments().getString(ProfileActivity.SCREEN_NAME);
+        Log.d("DEBUG", "UserTimelineFrag: populateTimeline - screenName=" + screenName);
         client.getUserTimeline(screenName, new JsonHttpResponseHandler() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, JSONArray response) {

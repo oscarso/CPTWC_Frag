@@ -4,6 +4,6 @@
     <string name="app_name">CPTWC_Frag</string>
     <string name="login_label">Connect with Twitter</string>
     <string name="title_activity_timeline">Timeline</string>
-    <string name="title_activity_profile">ProfileActivity</string>
+    <string name="title_activity_profile">Profile</string>
 
 </resources>
