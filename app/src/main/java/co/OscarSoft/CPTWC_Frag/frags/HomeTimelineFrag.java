@@ -40,7 +40,7 @@ public class HomeTimelineFrag extends TweetsListFrag {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, JSONObject errorResponse) {
                 //super.onFailure(statusCode, headers, throwable, errorResponse);
-                Log.d("ERROR", "populateTimeline Fail 2");
+                Log.d("ERROR", "HomeTimelineFrag: populateTimeline failed");
             }
         });
     }

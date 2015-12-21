@@ -66,7 +66,10 @@ public class TimelineActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void onProfileView(MenuItem mi) {
+    public void onProfileView(MenuItem item) {
+        //Log.d("DEBUG", "onProfileView");
+        Intent i = new Intent(this, ProfileActivity.class);
+        startActivity(i);
         return;
     }
 
