@@ -11,8 +11,11 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.loopj.android.http.JsonHttpResponseHandler;
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.Header;
 import org.json.JSONArray;
@@ -40,6 +43,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, JSONObject response) {
                 user = User.fromJSON(response);
                 getSupportActionBar().setTitle(user.getScreenName());
+                populateProfileHeader(user);
             }
         });
 
@@ -51,6 +55,19 @@ public class ProfileActivity extends AppCompatActivity {
             ft.replace(R.id.flContainer, userTimelineFrag);
             ft.commit();
         }
+    }
+
+    private void populateProfileHeader(final User user) {
+        TextView tvName = (TextView) findViewById(R.id.tvName);
+        TextView tvTagLine = (TextView) findViewById(R.id.tvTagLine);
+        TextView tvFollowers = (TextView) findViewById(R.id.tvFollowers);
+        TextView tvFollowing = (TextView) findViewById(R.id.tvFollowing);
+        ImageView ivProfileImage = (ImageView) findViewById(R.id.ivProfileImage);
+        tvName.setText(user.getName());
+        tvTagLine.setText(user.getTagLine());
+        tvFollowers.setText(user.getFollowersCount() + " Followers");
+        tvFollowing.setText(user.getFollowingsCount() + " Following");
+        Picasso.with(this).load(user.getProfileImageUrl()).into(ivProfileImage);
     }
 
     @Override

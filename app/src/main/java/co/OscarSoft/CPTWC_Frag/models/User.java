@@ -14,7 +14,34 @@ public class User {
     private long uid;
     private String screenName;
     private String profileImageUrl;
+    private String tagLine;
+    private int followersCount;
+    private int followingsCount;
 
+
+    public void setTagLine(String tagLine) {
+        this.tagLine = tagLine;
+    }
+
+    public void setFollowersCount(int followersCount) {
+        this.followersCount = followersCount;
+    }
+
+    public void setFollowingsCount(int followingsCount) {
+        this.followingsCount = followingsCount;
+    }
+
+    public String getTagLine() {
+        return tagLine;
+    }
+
+    public int getFollowersCount() {
+        return followersCount;
+    }
+
+    public int getFollowingsCount() {
+        return followingsCount;
+    }
 
     public static User fromJSON(JSONObject jsonObj) {
         User user;
@@ -27,6 +54,9 @@ public class User {
                 user.uid = jsonObj.getLong("id");
                 user.screenName = jsonObj.getString("screen_name");
                 user.profileImageUrl = jsonObj.getString("profile_image_url");
+                user.tagLine = jsonObj.getString("description");
+                user.followersCount = jsonObj.getInt("followers_count");
+                user.followingsCount = jsonObj.getInt("friends_count");
                 dataHolder = user; //cache it for later use
             } catch (JSONException je) {
                 Log.e("ERROR", je.toString());
